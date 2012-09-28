@@ -25,7 +25,7 @@
 class Cartographer::Gmap
   
   attr_accessor :dom_id, :draggable, :polylines,:type, :controls,
-  :markers, :center, :zoom, :icons, :debug, :marker_mgr, :current_marker, :marker_clusterer, :shared_info_window, :marker_clusterer_icons
+  :markers, :center, :zoom, :zoom2, :icons, :debug, :marker_mgr, :current_marker, :marker_clusterer, :shared_info_window, :marker_clusterer_icons
 
 
 
@@ -52,6 +52,7 @@ class Cartographer::Gmap
     @controls  = opts[:controls] || [ :zoom ]
     @center    = opts[:center] || [0,0]
     @zoom      = opts[:zoom] || 1
+    @zoom2     = opts[:zoom2] || 5
     
     @debug = opts[:debug]
     
@@ -121,6 +122,7 @@ class Cartographer::Gmap
       html << "var #{@dom_id}_bounds = new google.maps.LatLngBounds(new google.maps.LatLng(#{sw_ne[0][0]}, #{sw_ne[0][1]}), new google.maps.LatLng(#{sw_ne[1][0]}, #{sw_ne[1][1]}));\n"
       html << "#{@dom_id}.setCenter(#{@dom_id}_bounds.getCenter());\n"
       html << "#{@dom_id}.fitBounds(#{@dom_id}_bounds);\n"
+      html << "#{@dom_id}.setZoom(#{@zoom2});\n"
     else
       html << "#{@dom_id}.setCenter(new google.maps.LatLng(#{@center[0]}, #{@center[1]}));#{@dom_id}.setZoom(#{@zoom});\n"
     end
